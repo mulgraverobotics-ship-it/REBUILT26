@@ -45,7 +45,7 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        m_driverController.y().toggleOnTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed));
+        m_driverController.y().onTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed));
     }
 
     public Command getAutonomousCommand() {
