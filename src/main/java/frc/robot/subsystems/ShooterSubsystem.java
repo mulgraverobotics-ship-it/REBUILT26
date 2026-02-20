@@ -35,11 +35,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command runShooterCommand(double speed) {
-        SmartDashboard.putNumber("Shooter Active", speed)
+        SmartDashboard.putNumber("Shooter Active", speed);
         return run(() -> {
             m_rollerMotor.set(speed);
         });
-
     }
 
+    public void stopMotor() {
+        m_rollerMotor.set(0);
+    }
 }
