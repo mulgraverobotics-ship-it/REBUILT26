@@ -20,7 +20,7 @@ public final class Constants {
         //speed  multiplier
         public static final double SpeedMulti = 1;
 
-        //ramp rate     
+        //ramp rate
         public static final double dirRampVal = 8.0;
         public static final double magRampVal = 6.7;
         public static final double rotRampVal = 2.0;
@@ -70,9 +70,13 @@ public final class Constants {
     }
 
     // Operator input constants
+    // Port 0 = driver (driving), Port 1 = operator (shooter, later hang/elevator).
+    // To swap: e.g. use Xbox for both — plug driver in 0, operator in 1; no code change needed.
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
-        public static final int kSecondaryControllerPort = 1;
+        public static final int kOperatorControllerPort = 1;
+        /** @deprecated Use kOperatorControllerPort */
+        public static final int kSecondaryControllerPort = kOperatorControllerPort;
         public static final double kDriveDeadband = 0.2;
     }
 
@@ -96,7 +100,7 @@ public final class Constants {
         public static final double kFreeSpeedRpm = 5676;
     }
 
-    // Controller button mappings
+    // Controller button mappings (Xbox and Logitech F310 in XInput mode use same numbers)
     public static final class ButtonConstants {
         public static final int xboxA = 1;
         public static final int xboxB = 2;
@@ -109,6 +113,11 @@ public final class Constants {
         public static final int xboxLINES = 8;
         public static final int xboxLeftJoystickDown = 9;
         public static final int xboxRightJoystickDown = 10;
+
+        /** Button on operator controller that runs shooter. Change to xboxA (1), xboxX (3), etc. if you swap to another layout. */
+        public static final int operatorShooterButton = xboxY;
+        /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
+        public static final int operatorGyroResetButton = xboxMAPS;
     }
 
     public static final class ShooterConstants {
