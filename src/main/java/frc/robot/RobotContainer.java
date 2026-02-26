@@ -10,11 +10,13 @@ import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class RobotContainer {
 
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+    private final VisionSubsystem vision = new VisionSubsystem();
 
     // Driver = port 0 (Xbox): driving. Operator = port 1 (Logitech now; can swap to Xbox later): shooter, etc.
     private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
