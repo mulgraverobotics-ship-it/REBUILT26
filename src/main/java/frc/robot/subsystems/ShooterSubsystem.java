@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
-// import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -14,34 +12,30 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final SparkMax m_rollerMotor;
-    // private final RelativeEncoder m_encoder; // do we need it?
+    private final SparkMax m_shooterLeft;
+    private final SparkMax m_shooterRight;
 
     public ShooterSubsystem() {
-        // update the canID in Constants.java
-        m_rollerMotor = new SparkMax(ShooterConstants.ShooterMotorNcanID, MotorType.kBrushless);
+        m_shooterLeft = new SparkMax(ShooterConstants.ShooterMotorLeftCanId, MotorType.kBrushless);
+        m_shooterRight = new SparkMax(ShooterConstants.ShooterMotorRightCanId, MotorType.kBrushless);
 
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.smartCurrentLimit(50).idleMode(IdleMode.kBrake);
 
-        SparkMaxConfig moterConfig = new SparkMaxConfig();
-
-        moterConfig
-                .smartCurrentLimit(50)
-                .idleMode(IdleMode.kBrake);
-
-        m_rollerMotor.configure(moterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        // m_encoder = m_rollerMotor.getEncoder();
-        // encoder.setPosition(0);
+        m_shooterLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_shooterRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command runShooterCommand(double speed) {
         SmartDashboard.putNumber("Shooter Active", speed);
         return run(() -> {
-            m_rollerMotor.set(speed);
+            m_shooterLeft.set(speed);
+            m_shooterRight.set(speed);
         });
     }
 
     public void stopMotor() {
-        m_rollerMotor.set(0);
+        m_shooterLeft.set(0);
+        m_shooterRight.set(0);
     }
 }

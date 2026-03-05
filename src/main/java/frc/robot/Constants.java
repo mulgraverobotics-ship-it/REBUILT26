@@ -116,18 +116,20 @@ public final class Constants {
 
         /** Button on operator controller that runs shooter. Change to xboxA (1), xboxX (3), etc. if you swap to another layout. */
         public static final int operatorShooterButton = xboxY;
+        /** Button on operator controller that runs intake (hold). */
+        public static final int operatorIntakeButton = xboxA;
         /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
         public static final int operatorGyroResetButton = xboxMAPS;
     }
 
     public static final class ShooterConstants {
-        public static final int ShooterMotorNcanID = 10;
-        public static final int ShooterMotorVcanID1 = 11;
-        public static final int ShooterMotorVcanID2 = 13;
-        //public static final int ShooterMotorNcanID = ;
+        public static final int ShooterMotorLeftCanId = 10;
+        public static final int ShooterMotorRightCanId = 11;
         public static final double ShooterSpeed = 0.1;
+    }
 
-
-        //9, 10 (vortex), unknown (neo) - same time
+    public static final class IntakeConstants {
+        public static final int IntakeMotorCanId = 9;
+        public static final double IntakeSpeed = 0.8;
     }
 }
