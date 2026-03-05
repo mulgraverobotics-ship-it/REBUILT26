@@ -9,10 +9,18 @@ public class VisionSubsystem extends SubsystemBase {
     private final NetworkTable limelightTable = 
         NetworkTableInstance.getDefault().getTable("limelight");
 
+    public boolean hasTarget() {
+        return limelightTable.getEntry("tv").getDouble(0) > 0.5;
+    }
+
+    public double getTx() {
+        return limelightTable.getEntry("tx").getDouble(0);
+    }
+
     @Override
     public void periodic() {
         double tv = limelightTable.getEntry("tv").getDouble(0);
-        double tx = limelightTable.getEntry("tx").getDouble(0);
+        double tx = getTx();
         double ty = limelightTable.getEntry("ty").getDouble(0);
         double tagID = limelightTable.getEntry("tid").getDouble(0);
 
@@ -23,5 +31,6 @@ public class VisionSubsystem extends SubsystemBase {
 
         SmartDashboard.putBoolean("LL/tableExists", limelightTable != null);
         SmartDashboard.putNumber("LL/rawTV", limelightTable.getEntry("tv").getDouble(-1));
+        SmartDashboard.putBoolean("LL/hasTarget", hasTarget());
     }
 }

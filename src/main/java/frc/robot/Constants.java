@@ -118,6 +118,17 @@ public final class Constants {
         public static final int operatorShooterButton = xboxY;
         /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
         public static final int operatorGyroResetButton = xboxMAPS;
+        /** Hold button on driver controller to yaw-align to Limelight target. */
+        public static final int driverAimAssistButton = xboxRB;
+    }
+
+    public static final class VisionConstants {
+        /** Proportional gain from Limelight tx(deg) to rotation command. */
+        public static final double kAimKp = 0.02;
+        /** Ignore tiny tx offsets to avoid jitter while nearly centered. */
+        public static final double kAimDeadbandDeg = 1.0;
+        /** Clamp turn command to keep assist predictable for drivers. */
+        public static final double kAimMaxTurnCmd = 0.45;
     }
 
     public static final class ShooterConstants {

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -40,6 +41,30 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
+        // Driver hold-to-aim: keep translation control, auto-correct yaw from Limelight tx.
+        m_driverController.button(ButtonConstants.driverAimAssistButton)
+            .whileTrue(new RunCommand(
+                () -> {
+                    double xSpeed = -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband);
+                    double ySpeed = -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband);
+
+                    double rotCommand = -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband);
+                    if (vision.hasTarget()) {
+                        double tx = vision.getTx();
+                        if (Math.abs(tx) > VisionConstants.kAimDeadbandDeg) {
+                            rotCommand = MathUtil.clamp(
+                                -tx * VisionConstants.kAimKp,
+                                -VisionConstants.kAimMaxTurnCmd,
+                                VisionConstants.kAimMaxTurnCmd);
+                        } else {
+                            rotCommand = 0.0;
+                        }
+                    }
+
+                    m_robotDrive.drive(xSpeed, ySpeed, rotCommand, true, true);
+                },
+                m_robotDrive));
+
         // Shooter: operator controller (Logitech or Xbox — same button IDs). Change operatorShooterButton in Constants to remap.
         m_operatorController.button(ButtonConstants.operatorShooterButton)
             .whileTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed))
