@@ -14,28 +14,33 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
     private final SparkMax m_shooterLeft;
     private final SparkMax m_shooterRight;
+    private final SparkMax m_shooterDown;
 
     public ShooterSubsystem() {
         m_shooterLeft = new SparkMax(ShooterConstants.ShooterMotorLeftCanId, MotorType.kBrushless);
         m_shooterRight = new SparkMax(ShooterConstants.ShooterMotorRightCanId, MotorType.kBrushless);
+        m_shooterDown = new SparkMax(ShooterConstants.ShooterMotorDownCanId, MotorType.kBrushless);
 
         SparkMaxConfig config = new SparkMaxConfig();
         config.smartCurrentLimit(50).idleMode(IdleMode.kCoast);
 
         m_shooterLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_shooterRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_shooterDown.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command runShooterCommand(double speed) {
         SmartDashboard.putNumber("Shooter Active", speed);
         return run(() -> {
             m_shooterLeft.set(speed);
-            m_shooterRight.set(speed);
+            m_shooterRight.set(-speed);
+            m_shooterDown.set(-speed);
         });
     }
 
     public void stopMotor() {
         m_shooterLeft.set(0);
         m_shooterRight.set(0);
+        m_shooterDown.set(0);
     }
 }

@@ -145,6 +145,7 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int ShooterMotorLeftCanId = 10;
         public static final int ShooterMotorRightCanId = 11;
+        public static final int ShooterMotorDownCanId = 21;
         public static final double ShooterSpeed = 0.1;
     }
 
