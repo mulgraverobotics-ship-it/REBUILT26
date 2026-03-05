@@ -45,6 +45,18 @@ public class IntakeSubsystem extends SubsystemBase {
         return Math.abs(m_intakePivEncoder.getPosition());
     }
 
+    public Command spinUp(double speed){
+        return run(() -> m_intakePivMotor.set(speed));
+    }
+
+    public Command spinDown(double speed){
+        return run(() -> m_intakePivMotor.set(-speed));
+    }
+
+    public void spinStop(){
+        m_intakePivMotor.set(0);
+    }
+
     // public void setPivotState (double tarState){
     //     CurState = getPivPos();
     //     double speed = 0.0;
@@ -66,9 +78,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     // }
 
-    // public Command runIntakeCommand(double speed) {
-    //     return run(() -> m_intakeMotor.set(speed));
-    // }
+    public Command runIntakeCommand(double speed) {
+        return run(() -> m_intakeMotor.set(speed));
+    }
 
     // public Command setPivotCommand(double tarState){
     //     return run(() -> setPivotState(tarState));
