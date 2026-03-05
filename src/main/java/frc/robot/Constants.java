@@ -121,7 +121,16 @@ public final class Constants {
         /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
         public static final int operatorGyroResetButton = xboxMAPS;
         /** Hold button on driver controller to yaw-align to Limelight target. */
-        public static final int driverAimAssistButton = xboxRB;
+        public static final int driverAimAssistButton = xboxLINES;
+        
+        //intake pivot up
+        public static final int operatorIntakePivUp = xboxRB;
+        //intake pivot down
+        public static final int operatorIntakePivDown = xboxLB;
+
+        //intake roller
+        public static final int operatorIntakeRoller = xboxB;
+
     }
 
     public static final class VisionConstants {
@@ -141,9 +150,11 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int IntakePivMotorCanID = 9;
-        public static final int IntakeMotorCanId = 20;
+        public static final int IntakeMotorCanId = 22;
+        public static final int IntakeRollerCanID = 20;
         public static final double IntakeSpeed = 0.8;
         public static final double RollerSpeed = 0.2;
+        public static final double PivotSpeed = 0.1;
         public static final double tol = 0.1;
 
         public static final int IntakePivotLv1 = 0;

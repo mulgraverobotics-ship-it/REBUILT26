@@ -17,11 +17,13 @@ import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax m_intakeMotor;
     private final SparkMax m_intakePivMotor;
+    private  final SparkMax m_intakeRoller;
     private final RelativeEncoder m_intakePivEncoder;
     public double CurState;
 
     public IntakeSubsystem() {
         m_intakeMotor = new SparkMax(IntakeConstants.IntakeMotorCanId, MotorType.kBrushless);
+        m_intakeRoller = new SparkMax(IntakeConstants.IntakeRollerCanID, MotorType.kBrushless);
         m_intakePivMotor = new SparkMax(IntakeConstants.IntakePivMotorCanID, MotorType.kBrushless);
 
         m_intakePivEncoder = m_intakePivMotor.getEncoder();
@@ -31,6 +33,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_intakeMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_intakePivMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        CurState = getPivPos();
+        SmartDashboard.putNumber("Pivot State", CurState);
 
         
         
@@ -45,11 +50,11 @@ public class IntakeSubsystem extends SubsystemBase {
         double speed = 0.0;
 
         if (tarState > CurState){
-            speed = IntakeConstants.RollerSpeed*-1;
+            speed = IntakeConstants.PivotSpeed*-1;
         }
 
         else if (tarState < CurState){
-            speed = IntakeConstants.RollerSpeed;
+            speed = IntakeConstants.PivotSpeed;
         }
 
         else{
@@ -70,8 +75,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command MoveTo(double tarState){
-        if (tarState = 0.0){
-            return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> (m_intakePivMotor.set(0)));
+        if (tarState == 0.0){
+            return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);});
+        }
+        else{
+            return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);}); 
         }
     }
 
@@ -83,7 +91,27 @@ public class IntakeSubsystem extends SubsystemBase {
         return MathUtil.isNear(state, getPivPos(), tol);
     }
 
+    public Command MoveUp(){
+        CurState = getPivPos();
+        return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
+    }
+
+    public Command MoveDown(){
+        CurState = getPivPos();
+        return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
+    }
+
+    public Command runRollerCommand(double speed){
+        return run(() -> m_intakeRoller.set(speed));
+    }
+
+
+
     public void stop() {
         m_intakeMotor.set(0);
+    }
+
+    public void rollerStop(){
+        m_intakeRoller.set(0);
     }
 }

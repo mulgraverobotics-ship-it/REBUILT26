@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ButtonConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -56,6 +57,15 @@ public class RobotContainer {
         // Gyro reset: co-driver can re-zero heading for field-centric if needed
         m_operatorController.button(ButtonConstants.operatorGyroResetButton)
             .onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
+
+        //intake stuff
+        //intake pivot
+        m_operatorController.button(ButtonConstants.operatorIntakePivUp).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv1)));
+        m_operatorController.button(ButtonConstants.operatorIntakePivDown).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv2)));
+        //intake rollers
+        m_operatorController.button(ButtonConstants.operatorIntakeRoller)
+        .whileTrue(m_intake.runRollerCommand(Constants.IntakeConstants.RollerSpeed))
+        .onFalse(new InstantCommand(() -> m_intake.rollerStop(), m_intake));
     }
 
     public Command getAutonomousCommand() {
