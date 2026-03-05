@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterRight = new SparkMax(ShooterConstants.ShooterMotorRightCanId, MotorType.kBrushless);
 
         SparkMaxConfig config = new SparkMaxConfig();
-        config.smartCurrentLimit(50).idleMode(IdleMode.kBrake);
+        config.smartCurrentLimit(50).idleMode(IdleMode.kCoast);
 
         m_shooterLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_shooterRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

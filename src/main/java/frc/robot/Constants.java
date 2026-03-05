@@ -140,7 +140,17 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int IntakeMotorCanId = 9;
+        public static final int IntakePivMotorCanID = 9;
+        public static final int IntakeMotorCanId = 20;
         public static final double IntakeSpeed = 0.8;
+        public static final double RollerSpeed = 0.2;
+        public static final double tol = 0.1;
+
+        public static final int IntakePivotLv1 = 0;
+        public static final int IntakePivotLv2 = 0;
+        public static final int IntakePivotLv3 = 0;
+        public static final int IntakePivotLv4 = 0;
+
+        
     }
 }
