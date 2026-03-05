@@ -98,47 +98,33 @@ public final class Constants {
         public static final int xboxMAPS = 7;
         public static final int xboxLINES = 8;
 
-        public static final int driverAimAssistButton = xboxRB;
-
-        public static final int operatorIntakeInButton = xboxA;
-        public static final int operatorIntakeOutButton = xboxB;
-        public static final int operatorShooterSpinButton = xboxX;
-        public static final int operatorShootAndFeedButton = xboxY;
-        public static final int operatorIntakePivotUpButton = xboxLB;
-        public static final int operatorIntakePivotDownButton = xboxRB;
+        /** Button on operator controller that runs shooter. Change to xboxA (1), xboxX (3), etc. if you swap to another layout. */
+        public static final int operatorShooterButton = xboxY;
+        /** Button on operator controller that runs intake (hold). */
+        public static final int operatorIntakeButton = xboxA;
+        /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
         public static final int operatorGyroResetButton = xboxMAPS;
+        /** Hold button on driver controller to yaw-align to Limelight target. */
+        public static final int driverAimAssistButton = xboxRB;
     }
 
     public static final class VisionConstants {
+        /** Proportional gain from Limelight tx(deg) to rotation command. */
         public static final double kAimKp = 0.02;
+        /** Ignore tiny tx offsets to avoid jitter while nearly centered. */
         public static final double kAimDeadbandDeg = 1.0;
+        /** Clamp turn command to keep assist predictable for drivers. */
         public static final double kAimMaxTurnCmd = 0.45;
     }
 
-    public static final class IntakeConstants {
-        public static final int intakePivotCanId = 9;
-        public static final int intakeRollerCanId = 22;
-
-        public static final double pivotUpSpeed = 0.30;
-        public static final double pivotDownSpeed = -0.25;
-        public static final double intakeInSpeed = 0.85;
-        public static final double intakeOutSpeed = -0.70;
-    }
-
-    public static final class TransferConstants {
-        public static final int transferCanId = 20;
-
-        public static final double transferToShooterSpeed = 0.85;
-        public static final double transferReverseSpeed = -0.70;
-    }
-
     public static final class ShooterConstants {
-        // Based on your hardware layout: top-left, top-right, and shared bottom shooter
-        public static final int shooterTopLeftCanId = 10;
-        public static final int shooterTopRightCanId = 11;
-        public static final int shooterBottomCanId = 21;
+        public static final int ShooterMotorLeftCanId = 10;
+        public static final int ShooterMotorRightCanId = 11;
+        public static final double ShooterSpeed = 0.1;
+    }
 
-        public static final double shooterSpinSpeed = 0.85;
-        public static final double shooterFeedSpeed = 1.0;
+    public static final class IntakeConstants {
+        public static final int IntakeMotorCanId = 9;
+        public static final double IntakeSpeed = 0.8;
     }
 }
