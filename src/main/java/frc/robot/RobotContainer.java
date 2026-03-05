@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ButtonConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.TransferSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class RobotContainer {
@@ -23,12 +21,14 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final VisionSubsystem vision = new VisionSubsystem();
 
+    // Driver = port 0 (Xbox): driving. Operator = port 1 (Logitech now; can swap to Xbox later): shooter, etc.
     private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
     private final CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
     public RobotContainer() {
         configureButtonBindings();
 
+        // Default driving: driver controller only
         m_robotDrive.setDefaultCommand(
             new RunCommand(
                 () -> m_robotDrive.drive(
