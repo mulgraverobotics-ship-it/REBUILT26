@@ -10,6 +10,7 @@ import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -17,6 +18,7 @@ public class RobotContainer {
 
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+    private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final VisionSubsystem vision = new VisionSubsystem();
 
     // Driver = port 0 (Xbox): driving. Operator = port 1 (Logitech now; can swap to Xbox later): shooter, etc.
@@ -41,34 +43,15 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        // Driver hold-to-aim: keep translation control, auto-correct yaw from Limelight tx.
-        m_driverController.button(ButtonConstants.driverAimAssistButton)
-            .whileTrue(new RunCommand(
-                () -> {
-                    double xSpeed = -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband);
-                    double ySpeed = -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband);
-
-                    double rotCommand = -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband);
-                    if (vision.hasTarget()) {
-                        double tx = vision.getTx();
-                        if (Math.abs(tx) > VisionConstants.kAimDeadbandDeg) {
-                            rotCommand = MathUtil.clamp(
-                                -tx * VisionConstants.kAimKp,
-                                -VisionConstants.kAimMaxTurnCmd,
-                                VisionConstants.kAimMaxTurnCmd);
-                        } else {
-                            rotCommand = 0.0;
-                        }
-                    }
-
-                    m_robotDrive.drive(xSpeed, ySpeed, rotCommand, true, true);
-                },
-                m_robotDrive));
-
-        // Shooter: operator controller (Logitech or Xbox — same button IDs). Change operatorShooterButton in Constants to remap.
+        // Shooter: operator Y — run both shooter motors while held
         m_operatorController.button(ButtonConstants.operatorShooterButton)
             .whileTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed))
             .onFalse(new InstantCommand(() -> m_shooter.stopMotor(), m_shooter));
+
+        // Intake: operator A — run intake while held
+        m_operatorController.button(ButtonConstants.operatorIntakeButton)
+            .whileTrue(m_intake.runIntakeCommand(Constants.IntakeConstants.IntakeSpeed))
+            .onFalse(new InstantCommand(() -> m_intake.stop(), m_intake));
 
         // Gyro reset: co-driver can re-zero heading for field-centric if needed
         m_operatorController.button(ButtonConstants.operatorGyroResetButton)
