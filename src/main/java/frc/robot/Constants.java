@@ -5,11 +5,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
-import com.studica.frc.AHRS;
-import com.studica.frc.AHRS.NavXComType;
-
-// import edu.wpi.first.math.geometry.Translation3d;
-
 public final class Constants {
     // Drive system constants
     public static final class DriveConstants {
@@ -52,9 +47,7 @@ public final class Constants {
         public static final int kFrontRightTurningCanId = 2;
         public static final int kRearRightTurningCanId = 8;
 
-
         public static final boolean kGyroReversed = false;
-        
     }
 
     // Swerve module constants
@@ -69,14 +62,9 @@ public final class Constants {
                 / kDrivingMotorReduction;
     }
 
-    // Operator input constants
-    // Port 0 = driver (driving), Port 1 = operator (shooter, later hang/elevator).
-    // To swap: e.g. use Xbox for both — plug driver in 0, operator in 1; no code change needed.
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
         public static final int kOperatorControllerPort = 1;
-        /** @deprecated Use kOperatorControllerPort */
-        public static final int kSecondaryControllerPort = kOperatorControllerPort;
         public static final double kDriveDeadband = 0.2;
     }
 
@@ -95,12 +83,10 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
-    // Motor constants for NEO motors
     public static final class NeoMotorConstants {
         public static final double kFreeSpeedRpm = 5676;
     }
 
-    // Controller button mappings (Xbox and Logitech F310 in XInput mode use same numbers)
     public static final class ButtonConstants {
         public static final int xboxA = 1;
         public static final int xboxB = 2;
@@ -111,23 +97,48 @@ public final class Constants {
         public static final int xboxRB = 6;
         public static final int xboxMAPS = 7;
         public static final int xboxLINES = 8;
-        public static final int xboxLeftJoystickDown = 9;
-        public static final int xboxRightJoystickDown = 10;
 
-        /** Button on operator controller that runs shooter. Change to xboxA (1), xboxX (3), etc. if you swap to another layout. */
-        public static final int operatorShooterButton = xboxY;
-        /** Button on operator controller that resets the gyro (field-centric zero). Back/Select = 7, Start = 8. */
+        public static final int driverAimAssistButton = xboxRB;
+
+        public static final int operatorIntakeInButton = xboxA;
+        public static final int operatorIntakeOutButton = xboxB;
+        public static final int operatorShooterSpinButton = xboxX;
+        public static final int operatorShootAndFeedButton = xboxY;
+        public static final int operatorIntakePivotUpButton = xboxLB;
+        public static final int operatorIntakePivotDownButton = xboxRB;
         public static final int operatorGyroResetButton = xboxMAPS;
     }
 
+    public static final class VisionConstants {
+        public static final double kAimKp = 0.02;
+        public static final double kAimDeadbandDeg = 1.0;
+        public static final double kAimMaxTurnCmd = 0.45;
+    }
+
+    public static final class IntakeConstants {
+        public static final int intakePivotCanId = 9;
+        public static final int intakeRollerCanId = 22;
+
+        public static final double pivotUpSpeed = 0.30;
+        public static final double pivotDownSpeed = -0.25;
+        public static final double intakeInSpeed = 0.85;
+        public static final double intakeOutSpeed = -0.70;
+    }
+
+    public static final class TransferConstants {
+        public static final int transferCanId = 20;
+
+        public static final double transferToShooterSpeed = 0.85;
+        public static final double transferReverseSpeed = -0.70;
+    }
+
     public static final class ShooterConstants {
-        public static final int ShooterMotorNcanID = 10;
-        public static final int ShooterMotorVcanID1 = 11;
-        public static final int ShooterMotorVcanID2 = 13;
-        //public static final int ShooterMotorNcanID = ;
-        public static final double ShooterSpeed = 0.1;
+        // Based on your hardware layout: top-left, top-right, and shared bottom shooter
+        public static final int shooterTopLeftCanId = 10;
+        public static final int shooterTopRightCanId = 11;
+        public static final int shooterBottomCanId = 21;
 
-
-        //9, 10 (vortex), unknown (neo) - same time
+        public static final double shooterSpinSpeed = 0.85;
+        public static final double shooterFeedSpeed = 1.0;
     }
 }
