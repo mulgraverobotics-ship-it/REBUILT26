@@ -5,6 +5,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
+
+// import edu.wpi.first.math.geometry.Translation3d;
+
 public final class Constants {
     // Drive system constants
     public static final class DriveConstants {
@@ -47,7 +52,9 @@ public final class Constants {
         public static final int kFrontRightTurningCanId = 2;
         public static final int kRearRightTurningCanId = 8;
 
+
         public static final boolean kGyroReversed = false;
+        
     }
 
     // Swerve module constants
@@ -62,9 +69,14 @@ public final class Constants {
                 / kDrivingMotorReduction;
     }
 
+    // Operator input constants
+    // Port 0 = driver (driving), Port 1 = operator (shooter, later hang/elevator).
+    // To swap: e.g. use Xbox for both — plug driver in 0, operator in 1; no code change needed.
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
         public static final int kOperatorControllerPort = 1;
+        /** @deprecated Use kOperatorControllerPort */
+        public static final int kSecondaryControllerPort = kOperatorControllerPort;
         public static final double kDriveDeadband = 0.2;
     }
 
@@ -83,10 +95,12 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
+    // Motor constants for NEO motors
     public static final class NeoMotorConstants {
         public static final double kFreeSpeedRpm = 5676;
     }
 
+    // Controller button mappings (Xbox and Logitech F310 in XInput mode use same numbers)
     public static final class ButtonConstants {
         public static final int xboxA = 1;
         public static final int xboxB = 2;
@@ -97,6 +111,8 @@ public final class Constants {
         public static final int xboxRB = 6;
         public static final int xboxMAPS = 7;
         public static final int xboxLINES = 8;
+        public static final int xboxLeftJoystickDown = 9;
+        public static final int xboxRightJoystickDown = 10;
 
         /** Button on operator controller that runs shooter. Change to xboxA (1), xboxX (3), etc. if you swap to another layout. */
         public static final int operatorShooterButton = xboxY;
