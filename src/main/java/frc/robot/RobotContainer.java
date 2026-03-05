@@ -50,9 +50,9 @@ public class RobotContainer {
             .onFalse(new InstantCommand(() -> m_shooter.stopMotor(), m_shooter));
 
         // Intake: operator A — run intake while held
-        m_operatorController.button(ButtonConstants.operatorIntakeButton)
-            .whileTrue(m_intake.runIntakeCommand(Constants.IntakeConstants.IntakeSpeed))
-            .onFalse(new InstantCommand(() -> m_intake.stop(), m_intake));
+        // m_operatorController.button(ButtonConstants.operatorIntakeButton)
+        //     .whileTrue(m_intake.runIntakeCommand(Constants.IntakeConstants.IntakeSpeed))
+        //     .onFalse(new InstantCommand(() -> m_intake.stop(), m_intake));
 
         // Gyro reset: co-driver can re-zero heading for field-centric if needed
         m_operatorController.button(ButtonConstants.operatorGyroResetButton)
@@ -60,8 +60,8 @@ public class RobotContainer {
 
         //intake stuff
         //intake pivot
-        m_operatorController.button(ButtonConstants.operatorIntakePivUp).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv1)));
-        m_operatorController.button(ButtonConstants.operatorIntakePivDown).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv2)));
+        // m_operatorController.button(ButtonConstants.operatorIntakePivUp).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv1)));
+        // m_operatorController.button(ButtonConstants.operatorIntakePivDown).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv2)));
         //intake rollers
         m_operatorController.button(ButtonConstants.operatorIntakeRoller)
         .whileTrue(m_intake.runRollerCommand(Constants.IntakeConstants.RollerSpeed))

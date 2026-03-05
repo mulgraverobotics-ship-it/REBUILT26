@@ -45,61 +45,61 @@ public class IntakeSubsystem extends SubsystemBase {
         return Math.abs(m_intakePivEncoder.getPosition());
     }
 
-    public void setPivotState (double tarState){
-        CurState = getPivPos();
-        double speed = 0.0;
+    // public void setPivotState (double tarState){
+    //     CurState = getPivPos();
+    //     double speed = 0.0;
 
-        if (tarState > CurState){
-            speed = IntakeConstants.PivotSpeed*-1;
-        }
+    //     if (tarState > CurState){
+    //         speed = IntakeConstants.PivotSpeed*-1;
+    //     }
 
-        else if (tarState < CurState){
-            speed = IntakeConstants.PivotSpeed;
-        }
+    //     else if (tarState < CurState){
+    //         speed = IntakeConstants.PivotSpeed;
+    //     }
 
-        else{
+    //     else{
             
-        }
+    //     }
 
-        m_intakeMotor.set(speed);
-        SmartDashboard.putNumber("Current Intake Pivot State", CurState);
+    //     m_intakeMotor.set(speed);
+    //     SmartDashboard.putNumber("Current Intake Pivot State", CurState);
 
-    }
+    // }
 
-    public Command runIntakeCommand(double speed) {
-        return run(() -> m_intakeMotor.set(speed));
-    }
+    // public Command runIntakeCommand(double speed) {
+    //     return run(() -> m_intakeMotor.set(speed));
+    // }
 
-    public Command setPivotCommand(double tarState){
-        return run(() -> setPivotState(tarState));
-    }
+    // public Command setPivotCommand(double tarState){
+    //     return run(() -> setPivotState(tarState));
+    // }
 
-    public Command MoveTo(double tarState){
-        if (tarState == 0.0){
-            return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);});
-        }
-        else{
-            return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);}); 
-        }
-    }
+    // public Command MoveTo(double tarState){
+    //     if (tarState == 0.0){
+    //         return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);});
+    //     }
+    //     else{
+    //         return setPivotCommand(tarState).until(() -> aroundState(tarState)).andThen(() -> {m_intakePivMotor.set(0.0);}); 
+    //     }
+    // }
 
-    public boolean aroundState(double state){
-        return aroundState(state, IntakeConstants.tol);
-    }
+    // public boolean aroundState(double state){
+    //     return aroundState(state, IntakeConstants.tol);
+    // }
 
-    public boolean aroundState(double state, double tol){
-        return MathUtil.isNear(state, getPivPos(), tol);
-    }
+    // public boolean aroundState(double state, double tol){
+    //     return MathUtil.isNear(state, getPivPos(), tol);
+    // }
 
-    public Command MoveUp(){
-        CurState = getPivPos();
-        return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
-    }
+    // public Command MoveUp(){
+    //     CurState = getPivPos();
+    //     return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
+    // }
 
-    public Command MoveDown(){
-        CurState = getPivPos();
-        return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
-    }
+    // public Command MoveDown(){
+    //     CurState = getPivPos();
+    //     return run(() -> m_intakePivMotor.set(1* IntakeConstants.PivotSpeed));
+    // }
 
     public Command runRollerCommand(double speed){
         return run(() -> m_intakeRoller.set(speed));
