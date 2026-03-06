@@ -122,6 +122,9 @@ public final class Constants {
         public static final int operatorGyroResetButton = xboxMAPS;
         /** Hold button on driver controller to yaw-align to Limelight target. */
         public static final int driverAimAssistButton = xboxLINES;
+
+        //test buttons
+        public static final int operatorShooterButtonTest = xboxRightJoystickDown;
         
         //intake pivot up
         public static final int operatorIntakePivUp = xboxRB;
@@ -146,7 +149,8 @@ public final class Constants {
         public static final int ShooterMotorLeftCanId = 10;
         public static final int ShooterMotorRightCanId = 11;
         public static final int ShooterMotorDownCanId = 21;
-        public static final double ShooterSpeed = 0.1;
+        public static final double ShooterSpeed = 1.0;
+        public static final double ShooterSpeedTest = 0.7;
     }
 
     public static final class IntakeConstants {
@@ -154,8 +158,8 @@ public final class Constants {
         public static final int IntakeMotorCanId = 22;
         public static final int IntakeRollerCanID = 20;
         public static final double IntakeSpeed = 0.8;
-        public static final double RollerSpeed = 0.2;
-        public static final double PivotSpeed = 0.1;
+        public static final double RollerSpeed = 0.7;
+        public static final double PivotSpeed = 0.5;
         public static final double tol = 0.1;
 
         public static final int IntakePivotLv1 = 0;

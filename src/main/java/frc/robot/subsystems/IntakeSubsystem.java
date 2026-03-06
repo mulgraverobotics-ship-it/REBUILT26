@@ -79,7 +79,7 @@ public class IntakeSubsystem extends SubsystemBase {
     // }
 
     public Command runIntakeCommand(double speed) {
-        return run(() -> m_intakeMotor.set(speed));
+        return run(() -> m_intakeMotor.set(-speed));
     }
 
     // public Command setPivotCommand(double tarState){

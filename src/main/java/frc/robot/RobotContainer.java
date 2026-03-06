@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -46,7 +47,11 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Shooter: operator Y — run both shooter motors while held
         m_operatorController.button(ButtonConstants.operatorShooterButton)
-            .whileTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed))
+            .whileTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeed, Constants.IntakeConstants.IntakeSpeed))
+            .onFalse(new InstantCommand(() -> m_shooter.stopMotor(), m_shooter));
+
+        m_operatorController.button(ButtonConstants.operatorShooterButtonTest)
+            .whileTrue(m_shooter.runShooterCommand(Constants.ShooterConstants.ShooterSpeedTest, Constants.IntakeConstants.IntakeSpeed))
             .onFalse(new InstantCommand(() -> m_shooter.stopMotor(), m_shooter));
 
         // Intake: operator A — run intake while held
@@ -61,10 +66,12 @@ public class RobotContainer {
         //intake stuff
         //intake pivot
         m_operatorController.button(ButtonConstants.operatorIntakePivUp)
-        .onTrue(m_intake.spinUp(IntakeConstants.PivotSpeed).withTimeout(0.5));
+        .whileTrue(m_intake.spinUp(IntakeConstants.PivotSpeed))
+        .onFalse(new InstantCommand(() -> m_intake.spinStop()));
 
         m_operatorController.button(ButtonConstants.operatorIntakePivDown)
-        .onTrue(m_intake.spinDown(IntakeConstants.PivotSpeed).withTimeout(0.5));
+        .whileTrue(m_intake.spinDown(IntakeConstants.PivotSpeed))
+        .onFalse(new InstantCommand(() -> m_intake.spinStop()));
 
 
         // m_operatorController.button(ButtonConstants.operatorIntakePivUp).onTrue(new InstantCommand(() -> m_intake.MoveTo(IntakeConstants.IntakePivotLv1)));
@@ -76,7 +83,16 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new SequentialCommandGroup(
+        return Commands.sequence(
+            Commands.run(
+                () -> m_robotDrive.drive(1.0, 0, 0, true, true),
+                m_robotDrive
+            ).withTimeout(3),
+
+            Commands.runOnce(
+                () -> m_robotDrive.drive(0, 0, 0, true, true),
+                m_robotDrive
+            )
         );
     }
 }

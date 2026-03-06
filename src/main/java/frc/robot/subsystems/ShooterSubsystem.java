@@ -29,12 +29,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterDown.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-    public Command runShooterCommand(double speed) {
+    public Command runShooterCommand(double speed, double rollerspeed) {
         SmartDashboard.putNumber("Shooter Active", speed);
         return run(() -> {
             m_shooterLeft.set(speed);
             m_shooterRight.set(-speed);
-            m_shooterDown.set(-speed);
+            m_shooterDown.set(rollerspeed);
         });
     }
 
