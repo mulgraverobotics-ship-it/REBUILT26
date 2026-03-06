@@ -85,9 +85,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return Commands.sequence(
             Commands.run(
-                () -> m_robotDrive.drive(1.0, 0, 0, true, true),
+                () -> m_robotDrive.drive(0.3, 0, 0, true, true),
                 m_robotDrive
-            ).withTimeout(3),
+            ).withTimeout(1),
 
             Commands.runOnce(
                 () -> m_robotDrive.drive(0, 0, 0, true, true),
